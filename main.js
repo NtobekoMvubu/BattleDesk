@@ -1,72 +1,87 @@
-
-
+const topicCard = document.querySelectorAll('[data-topicCard]')
 const btnStart = document.querySelector('[data-btnStart]');
 const topicInpiut = document.querySelector('[data-topic-name]')
 let index = 0;
-let images = [];
 let time = 7000;
-let results = [];
-let topicName = topicInpiut.value;
+let pics = [];
 
-
- btnStart.addEventListener('click', (e) =>{
-     getWord();
-    console.log(topicInpiut.value);
-    getImages(topicInpiut.value);
-    slideShow();
+function startSlideshow()
+{
     
-})
+    
+        
+    
+}
 
-function slideShow(){
-    document.slide.src = images[index];
-    if (index < images.length - 1 ){
+function randomise(){
+        selectTopictype()
+        let imagePromise = getWord(topicType)
+        .then((topicName) =>{
+            console.log(topicName);
+            return(getImages(topicName)) 
+        })
+        .then((images) =>{
+            pics = images;
+            slideShow();
+            
+        })
+}
+
+ function slideShow(){
+    document.slide.src =  pics[index];
+    if (index < pics.length - 1 ){
         index++;
     }
     else{
         index = 0;
     }
-
     setTimeout('slideShow()', time);
 }
 
 function getImages(nameofTopic)
 {
-    console.log(nameofTopic)
-    fetch ('https://pixabay.com/api/?key=27492586-7ff850d71ad1fd6c7ff841f16&q='+nameofTopic+'&image_type=photo')
+    return fetch ('https://pixabay.com/api/?key=27492586-7ff850d71ad1fd6c7ff841f16&q='+nameofTopic+'&image_type=photo')
     .then((resp) => {
-        return resp.json();
-        
+        return resp.json(); 
     })
     .then((data) =>{
-        console.log(data);
-        results =data.hits;
-        results.forEach(pics => {
-            images.push(pics.largeImageURL)
-        });
-        
+        return data.hits.map(pics => {
+            return pics.largeImageURL;
+        })
     })
 }
-function getWord()
+function getWord(type)
 {
-    fetch('https://random-word-form.herokuapp.com/random/adjective')
+    console.log(type);
+    return fetch('https://random-word-form.herokuapp.com/random/'+ type) 
     .then((response) => {
         return response.json();
     })
     .then((data) =>{
-        topicName = data[0];   
-        console.log(topicName);
+        return data[0];
     })
-}
-
-function getPicture()
-{
-    // fetch ('https://api.pexels.com/v1/search?query=nature&per_page=1',{
-    // "Authorization" : '563492ad6f917000010000013e03d14ff6a14fb4b89641054d20fb18'} )
-    // .then ((response) =>{
-    //     return response.json();
-    // })
-    // .then((data)=>{
-    //     console.log(data);
-    // })
     
 }
+
+function selectTopictype()
+{
+    let random = Math.floor(Math.random() * 3) + 1;
+    console.log(random);
+
+    switch (random) {
+        case 1:
+            topicType = 'animal'
+            break;
+        case 2:
+            topicType = 'adjective'
+            break;
+        case 3:
+            topicType = 'noun'
+            break;
+    }
+}
+
+function assignbuttonTopic(){
+
+}
+
