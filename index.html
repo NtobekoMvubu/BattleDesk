@@ -8,16 +8,17 @@
     <link rel="stylesheet" href="stylesheet.css">
 </head>
 <body>
+   
     <header>
         <nav>
             <h1 class="heading">Battle Desk</h1>
         </nav>
     </header>
     <main>
-        <section class="topics-heading">
+        <section class="topics-heading" id="tpcHeading">
             <h2>Topics</h2>
         </section>
-        <section class="topics-container">
+        <section class="topics-container" id="tpcCard">
             <section class="topic-card" data-topicCard><h3>Topic1</h3></section>
             <section class="topic-card" data-topicCard><h3>Topic2</h3></section>
             <section class="topic-card" data-topicCard><h3>Topic3</h3></section>
@@ -26,11 +27,11 @@
         <button class="randomtpcBtn" type="submit" onclick="randomise()">Choose Random Topic</button>
         <br>
         <figure>
-            <img class="slideshow" src="/Res/ready.jpg" name="slide">
+            <img class="slideshow" src="/Res/ready.jpg" name="slide" id="pic">
         </figure>
-        <button class="startbtn" type="submit" data-btnStart onclick="startSlideshow">Start</button>
-
+        
     </main>
+   
     <script src="/main.js"></script>
 
 </body>
