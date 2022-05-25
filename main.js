@@ -5,15 +5,12 @@ let index = 0;
 let time = 7000;
 let pics = [];
 
-function startSlideshow()
-{
-    
-    
-        
-    
-}
-
 function randomise(){
+    document.getElementById('pic').style.display = 'block';
+    document.getElementById('tpcCard').style.display = 'none';
+    document.getElementById('tpcHeading').style.display = 'none';
+    window.scrollTo(0,document.body.scrollHeight);
+    
         selectTopictype()
         let imagePromise = getWord(topicType)
         .then((topicName) =>{
@@ -22,6 +19,11 @@ function randomise(){
         })
         .then((images) =>{
             pics = images;
+            let numberofSlides = 5
+            if (pics.length < numberofSlides)
+            {
+                randomise()
+            }
             slideShow();
             
         })
