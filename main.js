@@ -6,27 +6,22 @@ let time = 7000;
 let pics = [];
 
 function randomise(){
-    document.getElementById('pic').style.display = 'block';
-    document.getElementById('tpcCard').style.display = 'none';
-    document.getElementById('tpcHeading').style.display = 'none';
-    window.scrollTo(0,document.body.scrollHeight);
-    
-        selectTopictype()
-        let imagePromise = getWord(topicType)
-        .then((topicName) =>{
-            console.log(topicName);
-            return(getImages(topicName)) 
-        })
-        .then((images) =>{
-            pics = images;
-            let numberofSlides = 5
-            if (pics.length < numberofSlides)
-            {
-                randomise()
-            }
-            slideShow();
-            
-        })
+    setuppageforSlide()
+    selectTopictype()
+    let imagePromise = getWord(topicType)
+    .then((topicName) =>{
+        console.log(topicName);
+        return(getImages(topicName)) 
+    })
+    .then((images) =>{
+        pics = images;
+        let numberofSlides = 5
+        if (pics.length < numberofSlides)
+        {
+            randomise()
+        }
+        slideShow();
+    })
 }
 
  function slideShow(){
@@ -84,6 +79,33 @@ function selectTopictype()
 }
 
 function assignbuttonTopic(){
+    topicCard.forEach((topic) =>{
+        selectTopictype()
+        getWord(topicType)
+        .then((topicName) =>{
+            topic.innerHTML = topicName;
 
+    })
+    })
 }
+
+topicCard.forEach((topic) =>{
+    topic.addEventListener('click' ,(e) =>{
+        setuppageforSlide()
+        getImages(e.target.innerHTML)
+        .then((images) =>{
+            pics = images;
+            slideShow()
+        })
+    })
+})
+
+function setuppageforSlide(){
+    document.getElementById('pic').style.display = 'block';
+    document.getElementById('tpcCard').style.display = 'none';
+    document.getElementById('tpcHeading').style.display = 'none';
+    window.scrollTo(0,document.body.scrollHeight);
+}
+
+window.onload = assignbuttonTopic()
 
